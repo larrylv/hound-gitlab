@@ -12,12 +12,11 @@ FactoryGirl.define do
     trait(:inactive) { active false }
     trait(:in_private_org) do
       active true
-      in_organization true
       private true
     end
 
-    sequence(:full_github_name) { |n| "user/repo#{n}" }
-    sequence(:github_id) { |n| n }
+    sequence(:full_gitlab_name) { |n| "user/repo#{n}" }
+    sequence(:gitlab_id) { |n| n }
     private false
     in_organization false
 
