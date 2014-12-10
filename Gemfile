@@ -42,7 +42,9 @@ group :development, :test do
   gem "poltergeist"
   gem "rspec-rails", ">= 2.14"
   gem "quiet_assets"
+  gem "pry"
   gem "pry-rails"
+  gem "web-console"
   gem "thin"
 end
 
