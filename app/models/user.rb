@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   end
 
   def has_repos_with_missing_information?
-    repos.where("in_organization IS NULL OR private IS NULL").count > 0
+    repos.where("private IS NULL").count > 0
   end
 
   private

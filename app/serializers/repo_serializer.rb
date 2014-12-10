@@ -1,10 +1,9 @@
 class RepoSerializer < ActiveModel::Serializer
   attributes(
     :active,
-    :full_github_name,
-    :github_id,
+    :full_gitlab_name,
+    :gitlab_id,
     :id,
-    :in_organization,
-    :private,
+    :private
   )
 end
