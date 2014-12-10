@@ -36,49 +36,16 @@ If you have questions about the service, see our [FAQ] or email [hound@thoughtbo
 5. On the confirmation screen, copy the `Client ID` and `Client Secret` to
    `.env`. Note the setup script copies `.sample.env` to `.env` for you, if the
    file does not exist.
-6. Generate the [Stripe tokens] and copy them into your `.env` file. Put the
-   'Test Secret Key' as the value for `STRIPE_API_KEY` and 'Test Publishable
-   Key' as the value for `STRIPE_PUBLISHABLE_KEY`.
-7. Create a Stripe plan called "private" for your development environment
-   https://dashboard.stripe.com/test/plans
-> ID: "private"
-> Name: "private"
-
-8. Run `foreman start`. Foreman will start the web server, `redis-server`, and
+6. Run `foreman start`. Foreman will start the web server, `redis-server`, and
    the resque background job queue. NOTE: `rails server` will not load the
    appropriate environment variables and you'll get a "Missing `secret_key_base`
    for 'development' environment" error.
-
-[Stripe tokens]: https://manage.stripe.com/account/apikeys
 
 Testing
 -----------
 
 1. Set up your `development` environment as per above.
 2. Run `rake` to execute the full test suite.
-
-#### Stripe
-
-To test Stripe payments on staging use this fake credit card number.
-
-<table>
-  <thead>
-    <tr>
-      <th>Card</th>
-      <th>Number</th>
-      <th>Expiration</th>
-      <th>CVV</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Visa</td>
-      <td>4242424242424242</td>
-      <td>Any future date</td>
-      <td>Any 3 digits</td>
-    </tr>
-  </tbody>
-</table>
 
 Contributing
 ------------
