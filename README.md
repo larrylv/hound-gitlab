@@ -1,45 +1,18 @@
 Hound
 =====
 
-[![Build Status](https://travis-ci.org/thoughtbot/hound.svg?branch=master)](http://travis-ci.org/thoughtbot/hound?branch=master)
-[![Code Climate](https://codeclimate.com/github/thoughtbot/hound.png)](https://codeclimate.com/github/thoughtbot/hound)
+[![Build Status](https://travis-ci.org/larrylv/hound-gitlab.svg?branch=master)](http://travis-ci.org/larrylv/hound-gitlab?branch=master)
+[![Code Climate](https://codeclimate.com/github/larrylv/hound-gitlab.png)](https://codeclimate.com/github/larrylv/hound-gitlab)
 
-Take care of pesky code reviews with a trusty [Hound](http://houndci.com).
+This project is originally a fork of [Hound](https://github.com/thoughtbot/hound) by thoughtbot,
+and aims to support code reviews for GitLab.
 
-Hound reviews GitHub pull requests for style guide violations. [View the style
+Hound-GitLab reviews GitLab merge requests for style guide violations. [View the style
 guide &rarr;](https://github.com/thoughtbot/guides/tree/master/style)
 
-## Configure the Hound Service
+## Configure Hound-GitLab on Your Local Development Environment
 
-We run Hound as a hosted service at [houndci.com].
-
-If you are setting up Hound for the first time, see the [configuration] page.
-
-If you have questions about the service, see our [FAQ] or email [hound@thoughtbot.com].
-
-[houndci.com]: https://houndci.com
-[configuration]: https://houndci.com/configuration
-[FAQ]: https://houndci.com/faq
-[hound@thoughtbot.com]: mailto:hound@thoughtbot.com
-
-## Configure Hound on Your Local Development Environment
-
-1. After cloning the repository, run the setup script `./bin/setup`
-2. Log into your GitHub account and go to the
-   [Application Settings under Account settings](https://github.com/settings/applications).
-3. Under the GitHub Developer Applications panel - Click on "Register new
-   application"
-4. Fill in the application details:
-  * Application Name: Hound Development
-  * Homepage URL: http://localhost:5000
-  * Authorization Callback URL: http://localhost:5000
-5. On the confirmation screen, copy the `Client ID` and `Client Secret` to
-   `.env`. Note the setup script copies `.sample.env` to `.env` for you, if the
-   file does not exist.
-6. Run `foreman start`. Foreman will start the web server, `redis-server`, and
-   the resque background job queue. NOTE: `rails server` will not load the
-   appropriate environment variables and you'll get a "Missing `secret_key_base`
-   for 'development' environment" error.
+TBD.
 
 Testing
 -----------
