@@ -1,4 +1,4 @@
-Hound
+Hound-GitLab
 =====
 
 [![Build Status](https://travis-ci.org/larrylv/hound-gitlab.svg?branch=master)](http://travis-ci.org/larrylv/hound-gitlab?branch=master)
