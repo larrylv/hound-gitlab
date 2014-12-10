@@ -348,7 +348,6 @@ DEPENDENCIES
   rspec-rails (>= 2.14)
   rubocop (= 0.25.0)
   sass-rails (~> 4.0.2)
-  sentry-raven
   shoulda-matchers
   thin
   uglifier (>= 1.0.3)

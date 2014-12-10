@@ -1,8 +1,7 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery
+  protect_from_forgery with: :exception
 
   before_action :force_https
-  before_action :capture_campaign_params
   before_action :authenticate
   after_action  :set_csrf_cookie_for_ng
 
@@ -20,14 +19,6 @@ class ApplicationController < ActionController::Base
 
   def force_https?
     true
-  end
-
-  def capture_campaign_params
-    session[:campaign_params] ||= {
-      utm_campaign: params[:utm_campaign],
-      utm_medium: params[:utm_medium],
-      utm_source: params[:utm_source],
-    }
   end
 
   def authenticate
@@ -48,10 +39,6 @@ class ApplicationController < ActionController::Base
     if protect_against_forgery?
       cookies['XSRF-TOKEN'] = form_authenticity_token
     end
-  end
-
-  def report_exception(exception, metadata)
-    Raven.capture_exception(exception, extra: metadata)
   end
 
   protected
