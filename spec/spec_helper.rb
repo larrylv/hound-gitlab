@@ -7,15 +7,12 @@ require 'rspec/rails'
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
-  Analytics.backend = FakeAnalyticsRuby.new
-
   config.before do
     DatabaseCleaner.clean
   end
 
   config.infer_base_class_for_anonymous_controllers = false
   config.infer_spec_type_from_file_location!
-  config.include AnalyticsHelper
   config.include AuthenticationHelper
   config.include Features, type: :feature
   config.include HttpsHelper

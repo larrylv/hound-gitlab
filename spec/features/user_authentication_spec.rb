@@ -9,7 +9,6 @@ feature 'User authentication' do
     sign_in_as(user)
 
     expect(page).to have_content user.github_username
-    expect(analytics).to have_tracked("Signed In").for_user(user)
   end
 
   scenario "new user signs in" do

@@ -23,9 +23,6 @@ describe BuildRunner, '#run' do
       expect(build.violations.size).to be >= 1
       expect(build.pull_request_number).to eq 5
       expect(build.commit_sha).to eq payload.head_sha
-      expect(analytics).to have_tracked("Reviewed Repo").
-        for_user(repo.users.first).
-        with(properties: { name: repo.full_github_name })
     end
 
     it 'comments on violations' do

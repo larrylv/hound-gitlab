@@ -15,11 +15,7 @@ class SessionsController < ApplicationController
   private
 
   def find_user
-    if user = User.where(github_username: github_username).first
-      Analytics.new(user).track_signed_in
-    end
-
-    user
+    User.where(github_username: github_username).first
   end
 
   def create_user

@@ -9,7 +9,6 @@ class BuildRunner
         commit_sha: payload.head_sha,
       )
       commenter.comment_on_violations(violations)
-      track_reviewed_repo_for_each_user
     end
   end
 
@@ -38,12 +37,5 @@ class BuildRunner
   def repo
     @repo ||= Repo.active.
       find_and_update(payload.github_repo_id, payload.full_repo_name)
-  end
-
-  def track_reviewed_repo_for_each_user
-    repo.users.each do |user|
-      analytics = Analytics.new(user)
-      analytics.track_reviewed(repo)
-    end
   end
 end

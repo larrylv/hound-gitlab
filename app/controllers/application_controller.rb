@@ -44,10 +44,6 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.where(remember_token: session[:remember_token]).first
   end
 
-  def analytics
-    @analytics ||= Analytics.new(current_user, session[:campaign_params])
-  end
-
   def set_csrf_cookie_for_ng
     if protect_against_forgery?
       cookies['XSRF-TOKEN'] = form_authenticity_token

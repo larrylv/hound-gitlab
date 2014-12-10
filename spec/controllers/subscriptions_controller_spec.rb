@@ -25,9 +25,6 @@ describe SubscriptionsController, "#create" do
         with(repo: repo, github_token: token)
       expect(RepoSubscriber).to have_received(:subscribe).
         with(repo, membership.user, "cardtoken")
-      expect(analytics).to have_tracked("Subscribed Private Repo").
-        for_user(membership.user).
-        with(properties: { name: repo.name, revenue: repo.plan_price })
     end
 
     it "updates the current user's email address" do
@@ -94,8 +91,5 @@ describe SubscriptionsController, "#destroy" do
       with(repo: repo, github_token: token)
     expect(RepoSubscriber).to have_received(:unsubscribe).
       with(repo, subscribed_user)
-    expect(analytics).to have_tracked("Unsubscribed Private Repo").
-      for_user(current_user).
-      with(properties: { name: repo.name, revenue: -repo.plan_price })
   end
 end
