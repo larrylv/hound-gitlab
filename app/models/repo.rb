@@ -3,12 +3,7 @@ class Repo < ActiveRecord::Base
   has_many :users, through: :memberships
   has_many :builds
 
-  has_one :subscription
-
   alias_attribute :name, :full_github_name
-
-  delegate :type, :price, to: :plan, prefix: true
-  delegate :price, to: :subscription, prefix: true
 
   validates :full_github_name, presence: true
   validates :github_id, uniqueness: true, presence: true
@@ -39,16 +34,6 @@ class Repo < ActiveRecord::Base
 
   def deactivate
     update(active: false)
-  end
-
-  def plan
-    Plan.new(self)
-  end
-
-  def stripe_subscription_id
-    if subscription
-      subscription.stripe_subscription_id
-    end
   end
 
   def exempt?

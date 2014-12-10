@@ -55,32 +55,4 @@ describe DeactivationsController, "#create" do
       )
     end
   end
-
-  context "when repo has a subscription" do
-    it "raises" do
-      repo = create(:repo, private: true)
-      create(:subscription, repo: repo)
-      user = repo.users.first
-      stub_sign_in(user)
-
-      expect { post :create, repo_id: repo.id, format: :json }.
-        to raise_error(
-          DeactivationsController::CannotDeactivateRepoWithSubscription
-        )
-    end
-  end
-
-  context "when repo is private and does not have a subscription" do
-    it "returns successful response" do
-      repo = create(:repo, private: true)
-      user = repo.users.first
-      activator = double(:repo_activator, deactivate: true)
-      allow(RepoActivator).to receive(:new).and_return(activator)
-      stub_sign_in(user)
-
-      post :create, repo_id: repo.id, format: :json
-
-      expect(response.code).to eq "201"
-    end
-  end
 end

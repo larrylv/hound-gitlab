@@ -45,38 +45,6 @@ class Report
     end
   end
 
-  def self.subscriptions
-    format "Subscriptions" do
-      weeks.each do |week|
-        subscriptions_by_week_sql = <<-SQL
-          SELECT COUNT(*)
-          FROM subscriptions
-          WHERE deleted_at IS NULL
-          AND created_at >= '#{week}'
-          AND created_at < '#{week + 7.days}'
-        SQL
-
-        generate_output(subscriptions_by_week_sql, week)
-      end
-    end
-  end
-
-  def self.cancellations
-    format "Cancellations" do
-      weeks.each do |week|
-        cancellations_by_week_sql = <<-SQL
-          SELECT COUNT(*)
-          FROM subscriptions
-          WHERE deleted_at IS NOT NULL
-          AND created_at >= '#{week}'
-          AND created_at < '#{week + 7.days}'
-        SQL
-
-        generate_output(cancellations_by_week_sql, week)
-      end
-    end
-  end
-
   def self.weeks
     series_sql = <<-SQL
       SELECT date_trunc('week', series)::date week

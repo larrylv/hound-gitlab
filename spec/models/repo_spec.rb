@@ -48,43 +48,6 @@ describe Repo do
     end
   end
 
-  describe "#stripe_subscription_id" do
-    context "when subscription is nil" do
-      it "returns nil" do
-        repo = Repo.new
-
-        expect(repo.stripe_subscription_id).to be_nil
-      end
-    end
-
-    context "when subscription is present" do
-      it "returns Stripe subscription ID" do
-        subscription = build(:subscription, stripe_subscription_id: "abc123")
-        repo = subscription.repo
-
-        expect(repo.stripe_subscription_id).to eq "abc123"
-      end
-    end
-  end
-
-  describe "#plan_type" do
-    context "when repo is public" do
-      it "returns public plan type" do
-        repo = Repo.new(private: false)
-
-        expect(repo.plan_type).to eq "public"
-      end
-    end
-
-    context "when repo is private" do
-      it "returns private plan type" do
-        repo = Repo.new(private: true)
-
-        expect(repo.plan_type).to eq "private"
-      end
-    end
-  end
-
   describe "#activate" do
     it "updates repo active value to true" do
       repo = create(:repo, active: false)

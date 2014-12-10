@@ -1,4 +1,4 @@
-App.directive 'repo', ['Subscription', 'StripeCheckout', (Subscription, StripeCheckout) ->
+App.directive 'repo', [ ->
   scope: true
   templateUrl: '/templates/repo'
   link: (scope, element, attributes) ->
@@ -16,51 +16,9 @@ App.directive 'repo', ['Subscription', 'StripeCheckout', (Subscription, StripeCh
         .catch(-> alert('Your repo failed to deactivate.'))
         .finally(-> scope.processing = false)
 
-    createSubscription = (stripeToken) ->
-      scope.processing = true
-
-      subscription = new Subscription(
-        repo_id: scope.repo.id
-        card_token: stripeToken.id
-        email_address: stripeToken.email
-      )
-
-      subscription.$save().then((response) ->
-        scope.repo.active = true
-        scope.repo.stripe_subscription_id = response.stripe_subscription_id
-      ).catch(->
-        alert('Your subscription failed.')
-      ).finally(->
-        scope.processing = false
-      )
-
-    deleteSubscription = ->
-      scope.processing = true
-
-      subscription = new Subscription(repo_id: scope.repo.id)
-
-      subscription.$delete().then(->
-        scope.repo.active = false
-        scope.repo.stripe_subscription_id = null
-      ).catch(->
-        alert('Your repo could not be disabled')
-      ).finally(->
-        scope.processing = false
-      )
-
     scope.toggle = ->
       if scope.repo.active
-        if scope.repo.stripe_subscription_id
-          deleteSubscription()
-        else
-          deactivateRepo()
+        deactivateRepo()
       else
-        if scope.repo.price_in_cents > 0
-          StripeCheckout.open(
-            name: scope.repo.full_plan_name,
-            amount: scope.repo.price_in_cents,
-            createSubscription
-          )
-        else
-          activateRepo()
+        activateRepo()
 ]
