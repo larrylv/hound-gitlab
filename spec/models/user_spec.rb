@@ -27,16 +27,6 @@ describe User do
   end
 
   describe '#has_repos_with_missing_information?' do
-    context 'with repo without organization info' do
-      it 'returns true' do
-        user = create(:user)
-        repo = create(:repo, in_organization: nil)
-        user.repos << repo
-
-        expect(user).to have_repos_with_missing_information
-      end
-    end
-
     context 'with repo without privacy info' do
       it 'return true' do
         user = create(:user)
@@ -50,7 +40,7 @@ describe User do
     context 'with repo without organization and privacy info' do
       it 'returns true' do
         user = create(:user)
-        repo = create(:repo, in_organization: nil, private: nil)
+        repo = create(:repo, private: nil)
         user.repos << repo
 
         expect(user).to have_repos_with_missing_information
@@ -60,7 +50,7 @@ describe User do
     context 'with repo with organization and privacy info' do
       it 'returns false' do
         user = create(:user)
-        repo = create(:repo, in_organization: true, private: true)
+        repo = create(:repo, private: true)
         user.repos << repo
 
         expect(user).not_to have_repos_with_missing_information

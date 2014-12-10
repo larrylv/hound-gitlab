@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe RepoSyncsController, '#create' do
   it 'enqueues repo sync job' do
-    token = "usergithubtoken"
+    token = "usergitlabtoken"
     user = create(:user)
     stub_sign_in(user, token)
     allow(JobQueue).to receive(:push)

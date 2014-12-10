@@ -3,43 +3,43 @@ require "spec_helper"
 feature "Repo list", js: true do
   scenario "user views list" do
     user = create(:user)
-    repo = create(:repo, full_github_name: "thoughtbot/my-repo")
+    repo = create(:repo, full_gitlab_name: "thoughtbot/my-repo")
     repo.users << user
     sign_in_as(user)
 
     visit repos_path
 
-    expect(page).to have_content repo.full_github_name
+    expect(page).to have_content repo.full_gitlab_name
   end
 
   scenario "user filters list" do
     user = create(:user)
-    repo = create(:repo, full_github_name: "thoughtbot/my-repo")
+    repo = create(:repo, full_gitlab_name: "thoughtbot/my-repo")
     repo.users << user
 
     sign_in_as(user)
     visit repos_path
-    find(".search").set(repo.full_github_name)
+    find(".search").set(repo.full_gitlab_name)
 
-    expect(page).to have_content repo.full_github_name
+    expect(page).to have_content repo.full_gitlab_name
   end
 
   scenario "user syncs repos" do
     token = "usergithubtoken"
     user = create(:user)
-    repo = create(:repo, full_github_name: "user1/test-repo")
+    repo = create(:repo, full_gitlab_name: "user1/test-repo")
     user.repos << repo
     stub_repo_requests(token)
 
     sign_in_as(user, token)
     visit repos_path
 
-    expect(page).to have_content(repo.full_github_name)
+    expect(page).to have_content(repo.full_gitlab_name)
 
     click_link I18n.t("sync_repos")
 
     expect(page).to have_text("jimtom/My-Private-Repo")
-    expect(page).not_to have_text(repo.full_github_name)
+    expect(page).not_to have_text(repo.full_gitlab_name)
   end
 
   scenario "user signs up" do
@@ -58,9 +58,9 @@ feature "Repo list", js: true do
     repo = create(:repo, private: false)
     repo.users << user
     hook_url = "http://#{ENV["HOST"]}/builds"
-    stub_repo_request(repo.full_github_name, token)
-    stub_add_collaborator_request(repo.full_github_name, token)
-    stub_hook_creation_request(repo.full_github_name, hook_url, token)
+    stub_repo_request(repo.full_gitlab_name, token)
+    stub_add_collaborator_request(repo.full_gitlab_name, token)
+    stub_hook_creation_request(repo.full_gitlab_name, hook_url, token)
     stub_memberships_request
     stub_membership_update_request
 
@@ -78,15 +78,15 @@ feature "Repo list", js: true do
 
   scenario "user with admin access activates organization repo" do
     user = create(:user)
-    repo = create(:repo, private: false, full_github_name: "testing/repo")
+    repo = create(:repo, private: false, full_gitlab_name: "testing/repo")
     repo.users << user
     hook_url = "http://#{ENV["HOST"]}/builds"
     team_id = 4567 # from fixture
     hound_user = "houndci"
     token = "usergithubtoken"
-    stub_repo_with_org_request(repo.full_github_name, token)
-    stub_hook_creation_request(repo.full_github_name, hook_url, token)
-    stub_repo_teams_request(repo.full_github_name, token)
+    stub_repo_with_org_request(repo.full_gitlab_name, token)
+    stub_hook_creation_request(repo.full_gitlab_name, hook_url, token)
+    stub_repo_teams_request(repo.full_gitlab_name, token)
     stub_user_teams_request(token)
     stub_add_user_to_team_request(hound_user, team_id, token)
     stub_memberships_request
@@ -108,7 +108,7 @@ feature "Repo list", js: true do
     user = create(:user)
     repo = create(:repo, :active)
     repo.users << user
-    stub_hook_removal_request(repo.full_github_name, repo.hook_id)
+    stub_hook_removal_request(repo.full_gitlab_name, repo.hook_id)
 
     sign_in_as(user)
     visit repos_path
@@ -127,7 +127,7 @@ feature "Repo list", js: true do
     user = create(:user)
     repo = create(:repo, :active, private: true)
     repo.users << user
-    stub_hook_removal_request(repo.full_github_name, repo.hook_id)
+    stub_hook_removal_request(repo.full_gitlab_name, repo.hook_id)
 
     sign_in_as(user)
     visit repos_path

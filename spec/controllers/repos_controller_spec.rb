@@ -4,7 +4,7 @@ describe ReposController do
   describe "#index" do
     context "when current user is a member of a repo with missing information" do
       it "clears all memberships to allow for a forced reload" do
-        repo = create(:repo, in_organization: nil, private: nil)
+        repo = create(:repo,  private: nil)
         user = create(:user, repos: [repo])
         stub_sign_in(user)
 
@@ -16,7 +16,7 @@ describe ReposController do
 
     context "when current user is a member of a repo with no missing information" do
       it "clears all memberships to allow for a forced reload" do
-        repo = create(:repo, in_organization: true, private: true)
+        repo = create(:repo, private: true)
         user = create(:user, repos: [repo])
         stub_sign_in(user)
 
