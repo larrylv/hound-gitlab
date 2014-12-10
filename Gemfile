@@ -41,6 +41,9 @@ group :development, :test do
   gem "konacha"
   gem "poltergeist"
   gem "rspec-rails", ">= 2.14"
+  gem "quiet_assets"
+  gem "pry-rails"
+  gem "thin"
 end
 
 group :test do
