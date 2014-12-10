@@ -29,7 +29,7 @@ FactoryGirl.define do
   end
 
   factory :user do
-    sequence(:github_username) { |n| "github#{n}" }
+    sequence(:gitlab_username) { |n| "gitlab#{n}" }
 
     ignore do
       repos []

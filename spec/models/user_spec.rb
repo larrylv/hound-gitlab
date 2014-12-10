@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe User do
   it { should have_many(:repos).through(:memberships) }
-  it { should validate_presence_of :github_username }
+  it { should validate_presence_of :gitlab_username }
 
   describe '#create' do
     it 'generates a remember_token' do
@@ -17,12 +17,12 @@ describe User do
   end
 
   describe '#to_s' do
-    it 'returns GitHub username' do
+    it 'returns GitLab username' do
       user = build(:user)
 
       user_string = user.to_s
 
-      expect(user_string).to eq user.github_username
+      expect(user_string).to eq user.gitlab_username
     end
   end
 

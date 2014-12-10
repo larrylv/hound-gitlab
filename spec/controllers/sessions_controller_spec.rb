@@ -11,7 +11,7 @@ describe SessionsController do
 
         expect { post :create }.to change { User.count }.by(1)
         user = User.last
-        expect(user.github_username).to eq "jimtom"
+        expect(user.gitlab_username).to eq "jimtom"
         expect(user.email_address).to eq "jimtom@example.com"
       end
     end
