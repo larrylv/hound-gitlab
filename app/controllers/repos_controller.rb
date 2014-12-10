@@ -11,7 +11,7 @@ class ReposController < ApplicationController
         end
 
         render(
-          json: current_user.repos.order(active: :desc, full_github_name: :asc)
+          json: current_user.repos.includes(:subscription).order(active: :desc, full_github_name: :asc)
         )
       end
     end
