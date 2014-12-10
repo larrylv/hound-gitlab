@@ -1,5 +1,3 @@
-require 'octokit'
-
 class LargeBuildJob
   extend Retryable
   extend Buildable

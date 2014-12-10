@@ -1,4 +1,3 @@
-require "octokit"
 require "base64"
 require "active_support/core_ext/object/with_options"
 
