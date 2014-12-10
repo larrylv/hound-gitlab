@@ -4,6 +4,6 @@
 en:
   sync_repos: 'Refresh repo list'
   syncing_repos: 'Loading repos...'
-  authenticate: 'Sign In with GitHub'
+  authenticate: 'Sign In with GitLab'
   active_repos: 'Active repos'
   search_placeholder: 'search by repo or organization name'

@@ -1,7 +1,7 @@
 Houndapp::Application.routes.draw do
   mount Resque::Server, at: "/queue"
 
-  get "/auth/github/callback", to: "sessions#create"
+  match "/auth/gitlab/callback", to: "sessions#create", :via => [:get, :post]
   get "/sign_out", to: "sessions#destroy"
   get "/configuration", to: "application#configuration"
 
