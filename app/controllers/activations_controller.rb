@@ -14,14 +14,14 @@ class ActivationsController < ApplicationController
   private
 
   def activator
-    RepoActivator.new(repo: repo, github_token: github_token)
+    RepoActivator.new(repo: repo, gitlab_token: gitlab_token)
   end
 
   def repo
     @repo ||= current_user.repos.find(params[:repo_id])
   end
 
-  def github_token
-    session.fetch(:github_token)
+  def gitlab_token
+    session.fetch(:gitlab_token)
   end
 end
