@@ -5,7 +5,7 @@ class BuildRunner
     if repo && opened_merge_request?
       repo.builds.create!(
         violations: violations,
-        pull_request_number: payload.pull_request_number
+        pull_request_number: payload.merge_request_id
       )
       commenter.comment_on_violations(violations)
     end
