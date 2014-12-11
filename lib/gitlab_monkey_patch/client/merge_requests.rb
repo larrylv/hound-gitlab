@@ -17,14 +17,7 @@ class Gitlab::Client
     # @option options [String] :line_type The line type (new or old)
     # @return [Gitlab::ObjectifiedHash] Information about created merge request comment.
     def create_merge_request_comment(project, id, note, options = {})
-      post("/projects/#{project}/merge_request/#{id}/comments",
-        :body => {
-          :note      => note,
-          :line      => options[:line],
-          :file_path => options[:file_path],
-          :line_type => options[:line_type]
-        }
-      )
+      post("/projects/#{project}/merge_request/#{id}/comments", :body => {:note => note}.merge(options))
     end
   end
 end
