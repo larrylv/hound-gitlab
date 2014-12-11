@@ -22,6 +22,6 @@ class BuildsController < ApplicationController
   end
 
   def payload
-    @payload ||= Payload.new(params[:payload] || request.raw_post)
+    @payload ||= Payload.new(params)
   end
 end

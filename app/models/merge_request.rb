@@ -39,7 +39,7 @@ class MergeRequest
   end
 
   def api
-    @api ||= Gitlab.client(:endpoint => ENV['GITLAB_ENDPOINT'], :private_token => ENV['HOUND_GITHUB_TOKEN'])
+    @api ||= Gitlab.client(:endpoint => ENV['GITLAB_ENDPOINT'], :private_token => ENV['HOUND_GITLAB_TOKEN'])
   end
 
   delegate :gitlab_repo_id, :full_repo_name, :merge_request_id, :state, :to => :payload
