@@ -45,11 +45,6 @@ Style/SpaceAfterNot:
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-space-bang
   Enabled: true
 
-Style/SpaceInsideRangeLiteral:
-  Description: No spaces inside range literals.
-  StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-space-inside-range-literals
-  Enabled: true
-
 Style/CaseIndentation:
   Description: Indentation of when in a case/when/[else/]end.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#indent-when-to-case
