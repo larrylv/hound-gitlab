@@ -15,7 +15,7 @@ class Patch
       when RANGE_INFORMATION_LINE
         line_number = Regexp.last_match[:line_number].to_i
       when MODIFIED_LINE
-        line = Line.new(line_number, content, patch_position)
+        line = Line.new(number: line_number, content: content, patch_position: patch_position)
         lines << line
         line_number += 1
       when NOT_REMOVED_LINE
