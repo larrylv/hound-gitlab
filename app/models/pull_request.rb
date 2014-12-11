@@ -44,7 +44,7 @@ class PullRequest
   end
 
   def api
-    @api ||= GithubApi.new
+    @api ||= Gitlab.client(:endpoint => ENV['GITLAB_ENDPOINT'], :private_token => ENV['HOUND_GITHUB_TOKEN'])
   end
 
   def number
