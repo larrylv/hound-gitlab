@@ -25,6 +25,14 @@ class Payload
     merge_request["state"]
   end
 
+  def source_branch
+    merge_request["source_branch"]
+  end
+
+  def target_branch
+    merge_request["target_branch"]
+  end
+
   private
 
   def parse_data

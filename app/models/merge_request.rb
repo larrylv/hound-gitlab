@@ -1,3 +1,5 @@
+require 'gitlab_monkey_patch'
+
 class MergeRequest
   pattr_initialize :payload
 
@@ -5,10 +7,8 @@ class MergeRequest
     @comments ||= api.merge_request_comments(gitlab_repo_id, merge_request_id)
   end
 
-  def pull_request_files
-    @pull_request_files ||= api.
-      pull_request_files(full_repo_name, number).
-      map { |file| build_commit_file(file) }
+  def merge_request_files
+    @merge_request_files ||= merge_request_diffs.map { |diff| build_commit_file(diff)}
   end
 
   def comment_on_violation(violation)
@@ -25,11 +25,11 @@ class MergeRequest
   end
 
   def opened?
-    state == "opened"
+    %w(opened reopened).include? state
   end
 
   def head_commit
-    @head_commit ||= Commit.new(full_repo_name, payload, api)
+    Commit.new(gitlab_repo_id, source_branch, api)
   end
 
   private
@@ -42,5 +42,11 @@ class MergeRequest
     @api ||= Gitlab.client(:endpoint => ENV['GITLAB_ENDPOINT'], :private_token => ENV['HOUND_GITLAB_TOKEN'])
   end
 
-  delegate :gitlab_repo_id, :full_repo_name, :merge_request_id, :state, :to => :payload
+  def merge_request_diffs
+    @merge_request_diffs ||= api.compare(gitlab_repo_id, target_branch, source_branch).
+      diffs.reject{ |d| d["deleted_file"] }.
+      map { |d| Hashie::Mash.new(:filename => d["new_path"], :patch => d["diff"]) }
+  end
+
+  delegate :gitlab_repo_id, :full_repo_name, :merge_request_id, :state, :source_branch, :target_branch, :to => :payload
 end

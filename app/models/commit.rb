@@ -1,15 +1,9 @@
 class Commit
-  pattr_initialize :repo_name, :sha, :github
-  attr_reader :repo_name, :sha
+  pattr_initialize :gitlab_repo_id, :sha, :api
 
   def file_content(filename)
-    contents = @github.file_contents(repo_name, filename, sha)
-    if contents && contents.content
-      Base64.decode64(contents.content).force_encoding("UTF-8")
-    else
-      ""
-    end
-  rescue Octokit::NotFound
+    ct = @api.contents(gitlab_repo_id, sha, filename).to_s.force_encoding("UTF-8")
+  rescue Gitlab::Error::Error
     ""
   end
 end

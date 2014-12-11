@@ -7,5 +7,9 @@ class Gitlab::Client
     def compare(project, from, to)
       get("/projects/#{project}/repository/compare", query: {from: from, to: to})
     end
+
+    def contents(project, sha, file_path)
+      get("/projects/#{project}/repository/blobs/#{sha}?filepath=#{file_path}")
+    end
   end
 end
