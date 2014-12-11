@@ -1,5 +1,3 @@
-require 'gitlab'
-
 # http://doc.gitlab.com/ee/api/repositories.html#compare-branches-tags-or-commits
 
 class Gitlab::Client

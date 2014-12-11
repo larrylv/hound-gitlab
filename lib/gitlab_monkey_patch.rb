@@ -1,2 +1,2 @@
-require 'gitlab/client/merge_requests'
-require 'gitlab/client/repositories'
+require 'gitlab_monkey_patch/client/merge_requests'
+require 'gitlab_monkey_patch/client/repositories'

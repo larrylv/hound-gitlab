@@ -1,5 +1,3 @@
-require 'gitlab'
-
 # http://doc.gitlab.com/ce/api/commits.html#post-comment-to-commit
 
 class Gitlab::Client
