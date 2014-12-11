@@ -1,5 +1,7 @@
 require 'json'
 
+# https://gitlab.com/gitlab-org/gitlab-ce/blob/master/doc/web_hooks/web_hooks.md#merge-request-events
+
 class Payload
   pattr_initialize :unparsed_data
 
@@ -7,32 +9,20 @@ class Payload
     @data ||= parse_data
   end
 
-  def head_sha
-    pull_request.fetch("head", {})["sha"]
-  end
-
-  def github_repo_id
-    repository["id"]
+  def gitlab_repo_id
+    merge_request["target_project_id"]
   end
 
   def full_repo_name
-    repository["full_name"]
+    "#{repository['namespace']} / #{repository['name']}"
   end
 
-  def pull_request_number
-    data['number']
+  def merge_request_id
+    merge_request["id"]
   end
 
-  def action
-    data['action']
-  end
-
-  def changed_files
-    pull_request["changed_files"] || 0
-  end
-
-  def repository_owner
-    repository["owner"]["login"]
+  def state
+    merge_request["state"]
   end
 
   private
@@ -45,11 +35,11 @@ class Payload
     end
   end
 
-  def pull_request
-    data.fetch("pull_request", {})
+  def merge_request
+    @merge_request ||= data.fetch("object_attributes", {})
   end
 
   def repository
-    @repository ||= data["repository"]
+    @repository ||= merge_request["target"]
   end
 end
