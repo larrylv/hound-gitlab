@@ -1,11 +1,11 @@
 class RepoActivator
-  def initialize(github_token:, repo:)
-    @github_token = github_token
+  def initialize(gitlab_token:, repo:)
+    @gitlab_token = gitlab_token
     @repo = repo
   end
 
   def activate
-    activate_repo && enqueue_org_invitation
+    activate_repo
   end
 
   def deactivate
@@ -16,7 +16,7 @@ class RepoActivator
 
   private
 
-  attr_reader :github_token, :repo
+  attr_reader :gitlab_token, :repo
 
   def activate_repo
     change_repository_state_quietly do
@@ -26,32 +26,33 @@ class RepoActivator
 
   def change_repository_state_quietly
     yield
-  rescue Octokit::Error => error
-    Raven.capture_exception(error)
+  rescue Gitlab::Error::Error => error
+    Rails.logger.error(error)
     false
   end
 
   def add_hound_to_repo
-    github_username = ENV.fetch("HOUND_GITHUB_USERNAME")
-    github.add_user_to_repo(github_username, repo.full_github_name)
+    gitlab_userid = ENV.fetch("HOUND_GITLAB_USERID")
+    gitlab.add_team_member(repo.gitlab_id, gitlab_userid, 30) # 30 means DEVELOPER
   end
 
-  def github
-    @github ||= GithubApi.new(github_token)
+  def gitlab
+    @gitlab ||= Gitlab.client(:endpoint => ENV['GITLAB_ENDPOINT'], :private_token => gitlab_token)
   end
 
+  HOOK_OPTIONS = {
+    :merge_requests_events => 'true',
+    :push_events           => 'false',
+    :issues_events         => 'false'
+  }
   def create_webhook
-    github.create_hook(repo.full_github_name, builds_url) do |hook|
-      repo.update(hook_id: hook.id)
-    end
-  end
-
-  def enqueue_org_invitation
-    JobQueue.push(OrgInvitationJob)
+    hook = gitlab.add_project_hook(repo.gitlab_id, builds_url, HOOK_OPTIONS)
+    hook = hook.to_hash if hook
+    repo.update(hook_id: hook["id"]) if hook && hook["id"]
   end
 
   def delete_webhook
-    github.remove_hook(repo.full_github_name, repo.hook_id) do
+    gitlab.delete_project_hook(repo.gitlab_id, repo.hook_id) do
       repo.update(hook_id: nil)
     end
   end
