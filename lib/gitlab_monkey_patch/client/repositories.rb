@@ -7,7 +7,7 @@ class Gitlab::Client
     end
 
     def contents(project, sha, file_path)
-      get("/projects/#{project}/repository/blobs/#{sha}?filepath=#{file_path}")
+      raw_get("/projects/#{project}/repository/blobs/#{sha}?filepath=#{file_path}")
     end
   end
 end
