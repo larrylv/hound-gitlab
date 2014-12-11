@@ -1,5 +1,4 @@
 class BuildsController < ApplicationController
-  before_action :ignore_confirmation_pings, only: [:create]
   skip_before_action :verify_authenticity_token, only: [:create]
   skip_before_action :authenticate, only: [:create]
 
@@ -12,12 +11,6 @@ class BuildsController < ApplicationController
 
   def force_https?
     false
-  end
-
-  def ignore_confirmation_pings
-    if payload.ping?
-      head :ok
-    end
   end
 
   def build_job_class

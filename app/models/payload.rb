@@ -31,10 +31,6 @@ class Payload
     pull_request["changed_files"] || 0
   end
 
-  def ping?
-    data['zen']
-  end
-
   def repository_owner
     repository["owner"]["login"]
   end
