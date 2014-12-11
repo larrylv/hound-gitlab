@@ -14,11 +14,7 @@ class BuildsController < ApplicationController
   end
 
   def build_job_class
-    if payload.changed_files < ENV['CHANGED_FILES_THRESHOLD'].to_i
-      SmallBuildJob
-    else
-      LargeBuildJob
-    end
+    LargeBuildJob
   end
 
   def payload
