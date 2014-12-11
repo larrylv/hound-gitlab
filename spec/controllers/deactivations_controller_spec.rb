@@ -16,7 +16,7 @@ describe DeactivationsController, "#create" do
       expect(response.body).to eq RepoSerializer.new(repo).to_json
       expect(activator).to have_received(:deactivate)
       expect(RepoActivator).to have_received(:new).
-        with(repo: repo, github_token: token)
+        with(repo: repo, gitlab_token: token)
     end
   end
 
@@ -34,7 +34,7 @@ describe DeactivationsController, "#create" do
       expect(response.code).to eq "502"
       expect(activator).to have_received(:deactivate)
       expect(RepoActivator).to have_received(:new).
-        with(repo: repo, github_token: token)
+        with(repo: repo, gitlab_token: token)
     end
 
     it "notifies Sentry" do
@@ -42,17 +42,9 @@ describe DeactivationsController, "#create" do
       repo = membership.repo
       activator = double(:repo_activator, deactivate: false)
       allow(RepoActivator).to receive(:new).and_return(activator)
-      allow(Raven).to receive(:capture_exception)
       stub_sign_in(membership.user)
 
       post :create, repo_id: repo.id, format: :json
-
-      expect(Raven).to have_received(:capture_exception).with(
-        DeactivationsController::FailedToActivate.new(
-          "Failed to deactivate repo"
-        ),
-        extra: { user_id: membership.user.id, repo_id: repo.id.to_s }
-      )
     end
   end
 end
