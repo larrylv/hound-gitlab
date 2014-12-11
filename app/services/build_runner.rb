@@ -2,7 +2,7 @@ class BuildRunner
   pattr_initialize :payload
 
   def run
-    if repo && relevant_pull_request?
+    if repo && opened_merge_request?
       repo.builds.create!(
         violations: violations,
         pull_request_number: payload.pull_request_number,
@@ -14,8 +14,8 @@ class BuildRunner
 
   private
 
-  def relevant_pull_request?
-    pull_request.opened? || pull_request.synchronize?
+  def opened_merge_request?
+    merge_request.opened?
   end
 
   def violations
@@ -23,15 +23,15 @@ class BuildRunner
   end
 
   def style_checker
-    StyleChecker.new(pull_request)
+    StyleChecker.new(merge_request)
   end
 
   def commenter
-    Commenter.new(pull_request)
+    Commenter.new(merge_request)
   end
 
-  def pull_request
-    @pull_request ||= PullRequest.new(payload)
+  def merge_request
+    @merge_request ||= MergeRequest.new(payload)
   end
 
   def repo
