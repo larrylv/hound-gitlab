@@ -1,4 +1,12 @@
 GIT
+  remote: https://github.com/larrylv/gitlab.git
+  revision: 40fde62ad048d29abc6f8735940c496b2961cca3
+  specs:
+    gitlab (3.2.0)
+      httparty
+      terminal-table
+
+GIT
   remote: https://github.com/larrylv/omniauth-gitlab.git
   revision: 57ad3cccffcf2cee8095e459e93a0a7f7fe66d04
   specs:
@@ -103,9 +111,6 @@ GEM
     foreman (0.74.0)
       dotenv (~> 0.11.1)
       thor (~> 0.19.1)
-    gitlab (3.2.0)
-      httparty
-      terminal-table
     haml (4.0.5)
       tilt
     haml-rails (0.5.3)
@@ -327,7 +332,7 @@ DEPENDENCIES
   factory_girl_rails
   font-awesome-rails
   foreman
-  gitlab
+  gitlab!
   haml-rails
   high_voltage
   jquery-rails
