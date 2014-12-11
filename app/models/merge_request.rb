@@ -17,8 +17,8 @@ class MergeRequest
       merge_request_id,
       violation.messages.join("<br>"),
       {
-        :line => violation.line_number,
-        :path => violation.filename,
+        :line      => violation.patch_position,
+        :file_path => violation.filename,
         :line_type => 'new'
       }
     )

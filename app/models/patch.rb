@@ -10,12 +10,12 @@ class Patch
   def changed_lines
     line_number = 0
 
-    lines.each_with_index.inject([]) do |lines, (content, _)|
+    lines.each_with_index.inject([]) do |lines, (content, patch_position)|
       case content
       when RANGE_INFORMATION_LINE
         line_number = Regexp.last_match[:line_number].to_i
       when MODIFIED_LINE
-        line = Line.new(line_number, content)
+        line = Line.new(line_number, content, patch_position)
         lines << line
         line_number += 1
       when NOT_REMOVED_LINE

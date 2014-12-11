@@ -13,7 +13,7 @@ class Gitlab::Client
     # @param  [String] note The content of a comment.
     # @param  [Hash] options A customizable set of options.
     # @option options [Integer] :line The line number
-    # @option options [String] :path The file path
+    # @option options [String] :file_path The file path
     # @option options [String] :line_type The line type (new or old)
     # @return [Gitlab::ObjectifiedHash] Information about created merge request comment.
     def create_merge_request_comment(project, id, note, options)
@@ -21,7 +21,7 @@ class Gitlab::Client
         :body => {
           :note      => note,
           :line      => options[:line],
-          :path      => options[:path],
+          :file_path => options[:file_path],
           :line_type => options[:line_type]
         }
       )
