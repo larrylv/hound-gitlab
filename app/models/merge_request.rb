@@ -12,6 +12,34 @@ class MergeRequest
   end
 
   def comment_on_violation(violation)
+    # comment_on_merge_request(violation)
+    comment_on_commit(violation)
+  end
+
+  def opened?
+    %w(opened reopened).include? state
+  end
+
+  def head_commit
+    Commit.new(gitlab_repo_id, head_sha, api)
+  end
+
+  private
+
+  def comment_on_commit(violation)
+    api.create_commit_comments(
+      gitlab_repo_id,
+      head_sha,
+      "[RuboCop detection]: #{violation.messages.join('<br>')}",
+      {
+        :line      => violation.patch_position,
+        :path      => violation.filename,
+        :line_type => 'new'
+      }
+    )
+  end
+
+  def comment_on_merge_request(violation)
     api.create_merge_request_comment(
       gitlab_repo_id,
       merge_request_id,
@@ -23,16 +51,6 @@ class MergeRequest
       }
     )
   end
-
-  def opened?
-    %w(opened reopened).include? state
-  end
-
-  def head_commit
-    Commit.new(gitlab_repo_id, source_branch, api)
-  end
-
-  private
 
   def build_commit_file(file)
     CommitFile.new(file, head_commit)
@@ -48,5 +66,5 @@ class MergeRequest
       map { |d| Hashie::Mash.new(:filename => d["new_path"], :patch => d["diff"]) }
   end
 
-  delegate :gitlab_repo_id, :full_repo_name, :merge_request_id, :state, :source_branch, :target_branch, :to => :payload
+  delegate :gitlab_repo_id, :full_repo_name, :merge_request_id, :state, :source_branch, :target_branch, :head_sha, :to => :payload
 end
