@@ -19,6 +19,10 @@ class Violation
     @messages.uniq
   end
 
+  def markdown_display
+    messages.map { |msg| "* #{msg}"}
+  end
+
   def patch_position
     @line.patch_position
   end
