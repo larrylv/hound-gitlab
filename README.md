@@ -12,7 +12,15 @@ guide &rarr;](https://github.com/thoughtbot/guides/tree/master/style)
 
 ## Configure Hound-GitLab on Your Local Development Environment
 
-TBD.
+1. After cloning the repository, run the setup script `./bin/setup`
+2. Log into your Gitlab account and go to the [Account Page](https://gitlab.com/profile/account).
+3. Copy the `Private token` to HOUND_GITLAB_TOKEN in `.env`, and then fetch your userid
+   with that token for HOUND_GITLAB_USERID(this is tricky, I know...) in .env file.
+   Note the setup script copies `.sample.env` to `.env` for you, if the
+   file does not exist.
+4. Edit `GITLAB_ENDPOINT` and `HOST` in .env file.
+5. Run `foreman start`. Foreman will start the web server, `redis-server`, and
+   the resque background job queue.
 
 Testing
 -----------
