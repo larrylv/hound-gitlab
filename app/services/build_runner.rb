@@ -2,10 +2,10 @@ class BuildRunner
   pattr_initialize :payload
 
   def run
-    if repo && opened_merge_request?
+    if repo && opened_merge_request? && !runned_merge_request?
       repo.builds.create!(
         violations: violations,
-        pull_request_number: payload.merge_request_id,
+        merge_request_id: payload.merge_request_id,
         commit_sha: payload.head_sha
       )
       commenter.comment_on_violations(violations)
@@ -16,6 +16,13 @@ class BuildRunner
 
   def opened_merge_request?
     merge_request.opened?
+  end
+
+  def runned_merge_request?
+    repo.builds.find_by(
+      merge_request_id: payload.merge_request_id,
+      commit_sha: payload.head_sha
+    ).present?
   end
 
   def violations
