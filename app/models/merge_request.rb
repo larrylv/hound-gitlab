@@ -57,7 +57,7 @@ class MergeRequest
   end
 
   def comment_note(violation)
-    "__[RuboCop detection, path: #{violation.filename}, line: #{violation.line_number}]__:\r\n\r\n#{violation.markdown_display}"
+    "[__RuboCop detection__, path: `#{violation.filename}`, line: `#{violation.line_number}`]:\r\n\r\n#{violation.markdown_display}"
   end
 
   def build_commit_file(file)
