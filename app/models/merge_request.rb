@@ -8,12 +8,12 @@ class MergeRequest
   end
 
   def merge_request_files
-    @merge_request_files ||= merge_request_diffs.map { |diff| build_commit_file(diff)}
+    @merge_request_files ||= merge_request_diffs.map { |diff| build_commit_file(diff) }
   end
 
   def comment_on_violation(violation)
-    # comment_on_merge_request(violation)
-    comment_on_commit(violation)
+    comment_on_merge_request(violation)
+    # comment_on_commit(violation)
   end
 
   def opened?
@@ -34,7 +34,7 @@ class MergeRequest
     api.create_commit_comment(
       gitlab_repo_id,
       head_sha,
-      "__[RuboCop detection, line :#{violation.line_number}]__: #{violation.markdown_display}",
+      comment_note(violation),
       {
         :line      => violation.line_number,
         :path      => violation.filename,
@@ -47,13 +47,17 @@ class MergeRequest
     api.create_merge_request_comment(
       gitlab_repo_id,
       merge_request_id,
-      "[RuboCop detection]: #{violation.messages.join('<br>')}",
+      comment_note(violation),
       {
         :line      => violation.patch_position,
         :file_path => violation.filename,
         :line_type => 'new'
       }
     )
+  end
+
+  def comment_note(violation)
+    "__[RuboCop detection, path: #{violation.filename}, line: #{violation.line_number}]__:\r\n\r\n#{violation.markdown_display}"
   end
 
   def build_commit_file(file)
@@ -65,9 +69,13 @@ class MergeRequest
   end
 
   def merge_request_diffs
-    @merge_request_diffs ||= api.compare(gitlab_repo_id, target_branch, source_branch).
-      diffs.reject{ |d| d["deleted_file"] }.
-      map { |d| Hashie::Mash.new(:filename => d["new_path"], :patch => d["diff"]) }
+    @merge_request_diffs ||= compare.diffs.reject{ |d|
+        d["deleted_file"]
+      }.map { |d| Hashie::Mash.new(:filename => d["new_path"], :patch => d["diff"]) }
+  end
+
+  def compare
+    @compare ||= api.compare(gitlab_repo_id, target_branch, source_branch)
   end
 
   delegate :gitlab_repo_id, :full_repo_name, :merge_request_id, :state, :source_branch, :target_branch, :to => :payload

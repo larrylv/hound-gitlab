@@ -20,7 +20,7 @@ class Violation
   end
 
   def markdown_display
-    messages.map.with_index { |msg, idx| "#{idx}). #{msg}"}.join("  ")
+    messages.map { |msg| "* #{msg}"}.join("\r\n\r\n")
   end
 
   def patch_position
