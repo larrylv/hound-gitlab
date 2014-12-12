@@ -27,7 +27,7 @@ class MergeRequest
   private
 
   def comment_on_commit(violation)
-    api.create_commit_comments(
+    api.create_commit_comment(
       gitlab_repo_id,
       head_sha,
       "[RuboCop detection]: #{violation.messages.join('<br>')}",
