@@ -27,6 +27,7 @@ gem "rubocop", "~> 0.27.0"
 gem "sass-rails", "~> 4.0.2"
 gem "uglifier", ">= 1.0.3"
 gem "unicorn"
+gem "dotenv-rails"
 
 group :staging, :production do
   gem "rails_12factor"
@@ -43,7 +44,6 @@ group :development, :test do
   gem "pry-rails"
   gem "web-console"
   gem "thin"
-  gem 'dotenv-rails'
 end
 
 group :test do
