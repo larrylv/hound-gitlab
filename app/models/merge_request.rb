@@ -32,7 +32,7 @@ class MergeRequest
       head_sha,
       "[RuboCop detection]: #{violation.messages.join('<br>')}",
       {
-        :line      => violation.patch_position,
+        :line      => violation.line_number,
         :path      => violation.filename,
         :line_type => 'new'
       }
