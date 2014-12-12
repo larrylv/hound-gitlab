@@ -34,7 +34,7 @@ class MergeRequest
     api.create_commit_comment(
       gitlab_repo_id,
       head_sha,
-      "[RuboCop detection, line :#{violation.line_number}]: &lt;br&gt;#{violation.markdown_display}",
+      "__[RuboCop detection, line :#{violation.line_number}]__: #{violation.markdown_display}",
       {
         :line      => violation.line_number,
         :path      => violation.filename,
