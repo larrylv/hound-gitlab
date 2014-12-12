@@ -1,0 +1,52 @@
+{
+    "object_kind": "merge_request",
+    "user": {
+        "name": "larrylv",
+        "username": "zdlv",
+        "avatar_url": "http: //www.gravatar.com/avatar/5174de26ef235cac33b0d8f07160d7bd?s=40\\u0026d=identicon"
+    },
+    "object_attributes": {
+        "id": 2345,
+        "target_branch": "d/mrm_0_remove_puma_gem",
+        "source_branch": "updated-master",
+        "source_project_id": 195,
+        "author_id": 151,
+        "assignee_id": null,
+        "title": "Test for Hound",
+        "created_at": "2014-12-1110: 08: 43UTC",
+        "updated_at": "2014-12-1110: 08: 43UTC",
+        "milestone_id": null,
+        "state": "opened",
+        "merge_status": "unchecked",
+        "target_project_id": 195,
+        "iid": 2,
+        "description": "",
+        "position": 0,
+        "source": {
+            "name": "UI",
+            "ssh_url": "git@git.dev.fwmrm.net: zdlv/ui.git",
+            "http_url": "http: //git.dev.fwmrm.net/zdlv/ui.git",
+            "namespace": "zdlv",
+            "visibility_level": 10
+        },
+        "target": {
+            "name": "UI",
+            "ssh_url": "git@git.dev.fwmrm.net: zdlv/ui.git",
+            "http_url": "http: //git.dev.fwmrm.net/zdlv/ui.git",
+            "namespace": "zdlv",
+            "visibility_level": 10
+        },
+        "last_commit": {
+            "id": "03eda4d55bf9923775608ff8609eacd6b2f7618b",
+            "message": "Merge branch 'point' into 'master'\n\nPoint\n\nSee merge request !2115\n",
+            "timestamp": "2014-12-09T06: 54: 03+00: 00",
+            "url": "http: //git.dev.fwmrm.net/zdlv/ui/commit/03eda4d55bf9923775608ff8609eacd6b2f7618b",
+            "author": {
+                "name": "BenCao",
+                "email": "zcao@freewheel.tv"
+            }
+        }
+    },
+    "build": {
+    }
+}
