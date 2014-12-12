@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141212054537) do
+ActiveRecord::Schema.define(version: 20141212054824) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20141212054537) do
     t.string   "commit_sha"
   end
 
+  add_index "builds", ["merge_request_id", "commit_sha"], name: "index_builds_on_merge_request_id_and_commit_sha", unique: true, using: :btree
   add_index "builds", ["repo_id"], name: "index_builds_on_repo_id", using: :btree
   add_index "builds", ["uuid"], name: "index_builds_on_uuid", unique: true, using: :btree
 
