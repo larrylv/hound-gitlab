@@ -15,7 +15,7 @@ class MergeRequest
     api.create_merge_request_comment(
       gitlab_repo_id,
       merge_request_id,
-      violation.messages.join("<br>"),
+      "[RuboCop detection]: #{violation.messages.join('<br>')}",
       {
         :line      => violation.patch_position,
         :file_path => violation.filename,
