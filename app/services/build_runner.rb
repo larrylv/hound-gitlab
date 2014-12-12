@@ -21,7 +21,7 @@ class BuildRunner
   def runned_merge_request?
     repo.builds.find_by(
       merge_request_id: payload.merge_request_id,
-      commit_sha: payload.head_sha
+      commit_sha: merge_request.head_sha
     ).present?
   end
 
