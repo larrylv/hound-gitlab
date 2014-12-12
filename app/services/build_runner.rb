@@ -6,7 +6,7 @@ class BuildRunner
       repo.builds.create!(
         violations: violations,
         merge_request_id: payload.merge_request_id,
-        commit_sha: payload.head_sha
+        commit_sha: merge_request.head_sha
       )
       commenter.comment_on_violations(violations)
     end

@@ -24,6 +24,10 @@ class MergeRequest
     Commit.new(gitlab_repo_id, head_sha, api)
   end
 
+  def head_sha
+    @head_sha ||= api.commit(gitlab_repo_id, source_branch).id
+  end
+
   private
 
   def comment_on_commit(violation)
@@ -66,5 +70,5 @@ class MergeRequest
       map { |d| Hashie::Mash.new(:filename => d["new_path"], :patch => d["diff"]) }
   end
 
-  delegate :gitlab_repo_id, :full_repo_name, :merge_request_id, :state, :source_branch, :target_branch, :head_sha, :to => :payload
+  delegate :gitlab_repo_id, :full_repo_name, :merge_request_id, :state, :source_branch, :target_branch, :to => :payload
 end

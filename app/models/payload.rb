@@ -33,10 +33,6 @@ class Payload
     merge_request["target_branch"]
   end
 
-  def head_sha
-    merge_request["last_commit"]["id"]
-  end
-
   private
 
   def parse_data
