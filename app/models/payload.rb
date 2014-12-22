@@ -26,7 +26,7 @@ class Payload
   end
 
   def source_branch
-    merge_request["source_branch"]
+    merge_request["last_commit"]["id"]
   end
 
   def target_branch
